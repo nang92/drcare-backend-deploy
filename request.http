@@ -1,0 +1,53 @@
+// POST Login
+POST http://localhost:8081/api/login
+Content-Type: application/json
+
+{
+  "email": "thang@gmail.com",
+  "password": "123456"
+}
+
+### 
+// Get all users 
+GET http://localhost:8081/api/get-all-users?id=ALL
+Content-Type: application/json
+
+###
+POST http://localhost:8081/api/create-new-user
+Content-Type: application/json
+
+
+{
+  "email": "thang2@gmail.com",
+  "password": "123456",
+  "firstName": "Thang",
+  "lastName": "Nguyen",
+  "address": "HCM",
+  "phonenumber": "123456789",
+  "gender": 1,
+  "roleId": 10
+}
+
+###
+// Delete user
+DELETE http://localhost:8081/api/delete-user
+Content-Type: application/json
+
+{
+  "id": 13
+}	
+
+###
+// Update user 
+PUT http://localhost:8081/api/edit-user
+
+{
+  "id": 14,
+  "address": "Thai Binh",
+  "firstName": "Thang3",
+  "lastName": "Pham",
+}
+
+###
+// GET gender
+GET http://localhost:8081/api/allcode?type=gender
