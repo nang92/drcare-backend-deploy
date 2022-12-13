@@ -2,7 +2,11 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static associate(models) {}
+    static associate(models) {
+      User.belongsTo(models.Allcode, { foreignKey: 'positionId', as: 'positionData', targetKey: 'keyMap' });
+      User.belongsTo(models.Allcode, { foreignKey: 'gender', as: 'genderData', targetKey: 'keyMap' });
+      User.hasOne(models.Markdown, { foreignKey: 'doctorId' });
+    }
   }
   User.init(
     {

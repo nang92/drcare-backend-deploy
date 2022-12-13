@@ -1,6 +1,5 @@
-import db from '../models/index';
 import bcrypt from 'bcryptjs';
-import { dateFormat } from '../../../Frontend/src/utils';
+import db from '../models/index.js';
 
 const salt = bcrypt.genSaltSync(10);
 let hashUserPassword = (password) => {
@@ -154,6 +153,10 @@ let editUserService = (data) => {
         user.roleId = data.roleId;
         user.positionId = data.positionId;
         user.gender = data.gender;
+
+        if (data.avatar) {
+          user.image = data.avatar;
+        }
 
         await user.save();
         resolve({

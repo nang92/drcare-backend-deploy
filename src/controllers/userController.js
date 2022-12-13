@@ -1,4 +1,4 @@
-import userService from '../services/userService';
+import userService from '../services/userService.js';
 
 let handleLogin = async (req, res) => {
   let email = req.body.email;
