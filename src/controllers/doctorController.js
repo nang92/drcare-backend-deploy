@@ -65,10 +65,41 @@ let bulkCreateSchedule = async (req, res) => {
   }
 };
 
+let getScheduleDoctorByDate = async (req, res) => {
+  let doctorId = req.query.doctorId;
+  let date = req.query.date;
+  try {
+    let info = await doctorService.getScheduleDoctorByDate(doctorId, date);
+    return res.status(200).json(info);
+  } catch (error) {
+    console.log('check doctorController error:', error);
+    return res.status(500).json({
+      errCode: 500,
+      message: 'Internal server error',
+    });
+  }
+};
+
+let getExtraInfoDoctorById = async (req, res) => {
+  let doctorId = req.query.doctorId;
+  try {
+    let info = await doctorService.getExtraInfoDoctorById(doctorId);
+    return res.status(200).json(info);
+  } catch (error) {
+    console.log('check doctorController error:', error);
+    return res.status(500).json({
+      errCode: 500,
+      message: 'Internal server error',
+    });
+  }
+};
+
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
   postInfoDoctor: postInfoDoctor,
   getDetailDoctorById: getDetailDoctorById,
   bulkCreateSchedule: bulkCreateSchedule,
+  getScheduleDoctorByDate: getScheduleDoctorByDate,
+  getExtraInfoDoctorById: getExtraInfoDoctorById,
 };
