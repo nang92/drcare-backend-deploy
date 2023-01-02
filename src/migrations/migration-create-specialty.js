@@ -12,7 +12,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
-      descriptionHMTL: {
+      descriptionHTML: {
         type: Sequelize.TEXT,
       },
       descriptionMarkdown: {

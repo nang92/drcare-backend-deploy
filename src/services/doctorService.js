@@ -84,7 +84,8 @@ let saveDetailInfoDoctor = (inputData) => {
         !inputData.action ||
         !inputData.selectedProvince ||
         !inputData.addressClinic ||
-        !inputData.nameClinic
+        !inputData.nameClinic ||
+        !inputData.specialtyId
       ) {
         resolve({
           errCode: 1,
@@ -125,7 +126,8 @@ let saveDetailInfoDoctor = (inputData) => {
           doctorInfo.provinceId = inputData.selectedProvince;
           doctorInfo.addressClinic = inputData.addressClinic;
           doctorInfo.nameClinic = inputData.nameClinic;
-
+          doctorInfo.specialtyId = inputData.specialtyId;
+          doctorInfo.clinicId = inputData.clinicId;
           await doctorInfo.save();
         } else {
           // Create
@@ -134,6 +136,8 @@ let saveDetailInfoDoctor = (inputData) => {
             provinceId: inputData.selectedProvince,
             nameClinic: inputData.nameClinic,
             addressClinic: inputData.addressClinic,
+            specialtyId: inputData.specialtyId,
+            clinicId: inputData.clinicId,
           });
         }
 
