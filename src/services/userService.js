@@ -22,7 +22,7 @@ let handleUserLogin = async (email, password) => {
       if (isExist) {
         let user = await db.User.findOne({
           where: { email: email },
-          attributes: ['email', 'password', 'roleId', 'firstName', 'lastName'],
+          attributes: ['id', 'email', 'password', 'roleId', 'firstName', 'lastName'],
           raw: true,
         });
         if (user) {

@@ -11,7 +11,15 @@ let buildUrlEmail = (doctorId, token) => {
 let postBookAppoinment = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!data.email || !data.doctorId || !data.date || !data.timeType || !data.fullName) {
+      if (
+        !data.email ||
+        !data.doctorId ||
+        !data.date ||
+        !data.timeType ||
+        !data.fullName ||
+        !data.selectedGender ||
+        !data.address
+      ) {
         resolve({
           errCode: 1,
           errMessage: 'Missing required parameters!',
@@ -35,6 +43,9 @@ let postBookAppoinment = (data) => {
           defaults: {
             email: data.email,
             roleId: 'R3',
+            gender: data.selectedGender,
+            address: data.address,
+            firstName: data.fullName,
           },
         });
 
@@ -73,7 +84,8 @@ let postVerifyBookAppoinment = (data) => {
           errMessage: 'Missing required parameters!',
         });
       } else {
-        let appoinment = await db.Booking.findOne({
+        //update status
+        let appointment = await db.Booking.findOne({
           where: {
             doctorId: data.doctorId,
             token: data.token,
@@ -82,9 +94,9 @@ let postVerifyBookAppoinment = (data) => {
           raw: false,
         });
 
-        if (appoinment) {
-          appoinment.statusId = 'S2';
-          await appoinment.save();
+        if (appointment) {
+          appointment.statusId = 'S2';
+          await appointment.save();
           resolve({
             errCode: 0,
             errMessage: 'Verify booking successfully!',

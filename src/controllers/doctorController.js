@@ -9,7 +9,7 @@ let getTopDoctorHome = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       errCode: 500,
-      message: 'Internal server error',
+      errMessage: 'Internal server error',
     });
   }
 };
@@ -21,7 +21,7 @@ let getAllDoctors = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       errCode: 500,
-      message: 'Internal server error',
+      errMessage: 'Internal server error',
     });
   }
 };
@@ -34,7 +34,7 @@ let postInfoDoctor = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       errCode: 500,
-      message: 'Internal server error',
+      errMessage: 'Internal server error',
     });
   }
 };
@@ -47,7 +47,7 @@ let getDetailDoctorById = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       errCode: 500,
-      message: 'Internal server error',
+      errMessage: 'Internal server error',
     });
   }
 };
@@ -60,7 +60,7 @@ let bulkCreateSchedule = async (req, res) => {
     console.log('check doctorController error:', error);
     return res.status(500).json({
       errCode: 500,
-      message: 'Internal server error',
+      errMessage: 'Internal server error',
     });
   }
 };
@@ -75,7 +75,7 @@ let getScheduleDoctorByDate = async (req, res) => {
     console.log('check doctorController error:', error);
     return res.status(500).json({
       errCode: 500,
-      message: 'Internal server error',
+      errMessage: 'Internal server error',
     });
   }
 };
@@ -89,7 +89,7 @@ let getExtraInfoDoctorById = async (req, res) => {
     console.log('check doctorController error:', error);
     return res.status(500).json({
       errCode: 500,
-      message: 'Internal server error',
+      errMessage: 'Internal server error',
     });
   }
 };
@@ -103,7 +103,33 @@ let getProfileDoctorById = async (req, res) => {
     console.log('check doctorController error:', error);
     return res.status(500).json({
       errCode: 500,
-      message: 'Internal server error',
+      errMessage: 'Internal server error',
+    });
+  }
+};
+
+let getListPatientForDoctor = async (req, res) => {
+  try {
+    let info = await doctorService.getListPatientForDoctor(req.query.doctorId, req.query.date);
+    return res.status(200).json(info);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      errCode: 500,
+      errMessage: 'Internal server error',
+    });
+  }
+};
+
+let sendRemedy = async (req, res) => {
+  try {
+    let info = await doctorService.sendRemedy(req.body);
+    return res.status(200).json(info);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      errCode: 500,
+      errMessage: 'Internal server error',
     });
   }
 };
@@ -117,4 +143,6 @@ module.exports = {
   getScheduleDoctorByDate: getScheduleDoctorByDate,
   getExtraInfoDoctorById: getExtraInfoDoctorById,
   getProfileDoctorById: getProfileDoctorById,
+  getListPatientForDoctor: getListPatientForDoctor,
+  sendRemedy: sendRemedy,
 };

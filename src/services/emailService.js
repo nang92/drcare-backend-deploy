@@ -44,7 +44,7 @@ let getBodyHTMLEmail = (dataSend) => {
         <div><b>Time:</b> ${dataSend.time}</div>
         <div><b>Doctor:</b> ${dataSend.doctorName}</div>
 
-        <>Please click the link below to verify your booking: <a href="${dataSend.verifyLink}">Verify booking</a></p>
+        <p>Please click the link below to verify your booking: <a href="${dataSend.verifyLink}">Verify booking</a></p>
 
         <p>Best regards!</p>
         <p>DrCare</p>
@@ -53,6 +53,57 @@ let getBodyHTMLEmail = (dataSend) => {
   return result;
 };
 
+let sendAttachmentEmail = async (dataSend) => {
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: process.env.EMAIL_APP,
+      pass: process.env.EMAIL_APP_PASSWORD,
+    },
+  });
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"DrCare " <leethang1102@gmail.com>', // sender address
+    to: dataSend.email, // list of receivers
+    subject: 'Ket qua kham benh', // Subject line
+    html: getBodyHTMLEmailRemedy(dataSend), // html body
+    attachments: [
+      {
+        filename: `result-${dataSend.patientName}-${new Date().getTime()}.png`,
+        content: dataSend.imgBase64.split('base64,')[1],
+        encoding: 'base64',
+      },
+    ],
+  });
+};
+
+// Examination results
+let getBodyHTMLEmailRemedy = (dataSend) => {
+  let result = '';
+  if (dataSend.language === 'de') {
+    result = `
+      <h3>Hallo ${dataSend.patientName}!, </h3>
+      <p>Vielen Dank, dass Sie den Terminbuchungsservice von DrCare nutzen. Bitte finden Sie die Ergebnisse Ihrer Untersuchung in der Anlage.</p>
+      <p>Mit freundlichen Grüßen!</p>
+      <p>DrCare</p>
+      `;
+  }
+  if (dataSend.language === 'en') {
+    result = `
+      <h3>Hello ${dataSend.patientName}!, </h3>
+      <p>Thank you for using the DrCare appointment booking service. Please find the results of your examination in the attachment.</p>
+      <p>Best regards!</p>
+      <p>DrCare</p>
+      `;
+  }
+  return result;
+};
+
 module.exports = {
   sendSimpleEmail: sendSimpleEmail,
+  sendAttachmentEmail: sendAttachmentEmail,
 };
