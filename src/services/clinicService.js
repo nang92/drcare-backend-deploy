@@ -88,8 +88,38 @@ let getDetailClinicById = (inputId) => {
   });
 };
 
+let getKeywordClinic = (keyword) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!keyword) {
+        resolve({
+          errCode: 1,
+          errMessage: 'Missing required parameters!',
+        });
+      } else {
+        let data = await db.Clinic.findAll({
+          where: {
+            name: {
+              $like: '%' + keyword + '%',
+            },
+          },
+          attributes: ['id', 'name', 'address'],
+        });
+
+        resolve({
+          errCode: 0,
+          data: data,
+        });
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   createClinic: createClinic,
   getAllClinic: getAllClinic,
   getDetailClinicById: getDetailClinicById,
+  getKeywordClinic: getKeywordClinic,
 };

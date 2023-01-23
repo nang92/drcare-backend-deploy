@@ -36,8 +36,21 @@ let getDetailClinicById = async (req, res) => {
   }
 };
 
+let getKeywordClinic = async (req, res) => {
+  try {
+    let info = await clinicService.getKeywordClinic(req.query.keyword);
+    return res.status(200).json(info);
+  } catch (error) {
+    return res.status(500).json({
+      errCode: 500,
+      message: 'Internal server error',
+    });
+  }
+};
+
 module.exports = {
   createClinic: createClinic,
   getAllClinic: getAllClinic,
   getDetailClinicById: getDetailClinicById,
+  getKeywordClinic: getKeywordClinic,
 };
